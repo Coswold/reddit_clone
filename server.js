@@ -2,28 +2,26 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
+
+// Use Body Parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// Add after body parser initialization!
+app.use(expressValidator());
+
+// Set db
+require('./data/reddit-db');
+
+const Post = require('./models/post')
+const posts = require('./controllers/posts')(app)
+
 var exphbs = require('express-handlebars')
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
-// INDEX
-app.get('/', (req, res) => {
-  res.render('home')
-})
+module.exports = app
 
-// NEW
-app.get('/posts/new', (req, res) => {
-    res.render('posts-new')
-})
-
-// CREATE
-app.post('/posts', (req, res) => {
-    Post.create(req.body).then((post) => {
-        console.log(post);
-        res.redirect(`/post/${review._id}`)
-    }).catch((err) => {
-        console.log(err.message)
-    })
-})
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`App listening on port ${port}!`))

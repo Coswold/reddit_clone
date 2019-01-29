@@ -1,22 +1,14 @@
 <!doctype html>
 <body>
-    <!-- Default form contact -->
-<form class="text-center border border-light p-5">
-
-    <!-- Subject -->
-    <label>New Post</label>
-    <div class="form-group">
-        <input class="form-control" id="exampleFormControlTextarea1" rows="1" placeholder="Title"></input>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <form method="POST" action="/posts">
+                {{> posts-form}}
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Save Post</button>
+                    <input class="btn btn-primary" type="button" value="Cancel" onclick="window.location.href='/'" />
+                </div>
+            </form>
+        </div>
     </div>
-
-    <!-- Message -->
-    <div class="form-group">
-        <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" placeholder="Body"></textarea>
-    </div>
-
-    <!-- Send button -->
-    <button class="btn btn-info btn-block" type="submit">Send</button>
-
-</form>
-<!-- Default form contact -->
 </body>
