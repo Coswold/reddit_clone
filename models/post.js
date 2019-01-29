@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
   postTitle: { type: String, required: true },
-  postBody: { type: String, required: true }
+  postBody: { type: String, required: true },
+  url: { type: String, required: true }
 });
 
 module.exports = mongoose.model("Post", PostSchema);
