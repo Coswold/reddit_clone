@@ -3,18 +3,28 @@
     <!-- POST TITLE -->
     <div class="form-group">
         <label for="postTitle">Title</label><br>
-        <input class="form-contol" id="postTitle" type="text" name="postTitle" value="{{post.postTitle}}" />
+        <input class="form-contol" id="postTitle" type="text" name="postTitle"
+        value="{{post.postTitle}}" />
     </div>
 
-    <!-- POST BODY -->
+    <!-- POST URL -->
     <div class="form-group">
         <label for="post-body">URL</label><br>
-        <input class="form-contol" id="url" type="text" name="url" value="{{post.url}}" />
+        <input class="form-contol" id="url" type="text" name="url"
+        value="{{post.url}}" />
     </div>
 
     <!-- POST BODY -->
     <div class="form-group">
-        <label for="post-body">Body</label><br>
-        <input class="form-contol" id="postBody" type="text" name="postBody" value="{{post.postBody}}" />
+        <label for="postBody">Body</label><br>
+        <input name="postBody" type="text" class="form-contol"
+        id="postBody" placeholder="Body" value="{{post.postBody}}" />
+    </div>
+
+    <!-- POST SUBREDDIT -->
+    <div class="form-group">
+        <label for="post-subreddit">Subreddit</label>
+        <input name="subreddit" type="text" class="form-control"
+        id="post-subreddit" placeholder="Subreddit" value="{{post.subreddit}}" />
     </div>
 </fieldset>
