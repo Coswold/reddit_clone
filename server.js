@@ -18,6 +18,8 @@ require('./data/reddit-db');
 const Post = require('./models/post')
 const posts = require('./controllers/posts')(app)
 
+require('./controllers/comments.js')(app);
+
 var exphbs = require('express-handlebars')
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
