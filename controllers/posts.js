@@ -3,9 +3,11 @@ const Post = require('../models/post')
 module.exports = function(app) {
     // INDEX
     app.get('/', (req, res) => {
+        var currentUser = req.user;
+
         Post.find({})
         .then(posts => {
-            res.render("posts-index", { posts });
+            res.render("posts-index", { posts, currentUser });
         })
         .catch(err => {
             console.log(err.message);
@@ -14,27 +16,34 @@ module.exports = function(app) {
 
     // NEW
     app.get('/posts/new', (req, res) => {
-        res.render('posts-new')
+        var currentUser = req.user;
+
+        res.render('posts-new', { currentUser });
     })
 
     // CREATE
     app.post('/posts', (req, res) => {
         // INSTANTIATE INSTANCE OF POST MODEL
-        const post = new Post(req.body);
-        console.log(post)
-        // SAVE INSTANCE OF POST MODEL TO DB
-        post.save((err, post) => {
-            // REDIRECT TO THE ROOT
-            return res.redirect(`/`);
-        })
+        if (req.user) {
+            const post = new Post(req.body);
+            console.log(post)
+            // SAVE INSTANCE OF POST MODEL TO DB
+            post.save((err, post) => {
+                // REDIRECT TO THE ROOT
+                return res.redirect(`/`);
+            })
+        } else {
+            return res.status(401); // UNAUTHORIZED
+        }
     });
 
     // SHOW
     app.get("/posts/:id", function(req, res) {
-        // LOOK UP THE POST
+        var currentUser = req.user;
+
         // LOOK UP THE POST
         Post.findById(req.params.id).populate('comments').then((post) => {
-            res.render('posts-show', { post })
+            res.render('posts-show', { post, currentUser })
         }).catch((err) => {
             console.log(err.message)
         })
