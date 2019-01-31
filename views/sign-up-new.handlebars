@@ -1,0 +1,16 @@
+<!doctype html>
+<body>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <form method="POST" action="/sign-up">
+                {{> sign-up-form}}
+                <div class="form-group">
+                    <button class="btn btn-outline-success my-2 my-sm-0 mr-sm-2"
+                    type="submit">Sign Up</button>
+                    <input class="btn btn-outline-success my-2 my-sm-0 mr-sm-2"
+                    type="button" value="Cancel" onclick="window.location.href='/'" />
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
