@@ -6,6 +6,8 @@ module.exports = function(app) {
     app.post("/posts/:postId/comments", function(req, res) {
         // INSTANTIATE INSTANCE OF MODEL
         const comment = new Comment(req.body);
+        console.log(req.user._id)
+        comment.author = req.user._id;
         console.log(comment)
 
         // SAVE INSTANCE OF Comment MODEL TO DB

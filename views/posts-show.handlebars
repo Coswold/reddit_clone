@@ -12,9 +12,12 @@
       </div>
     </form>
 
-    {{#each post.comments}}
+    <li class="list-group-item">
+        {{#each post.comments}}
         <p>{{ this.content }}</p>
-    {{/each}}
+        <p class="text-right">{{this.author.username}}</p>
+        {{/each}}
+    </li>
 
   </div>
 </div>
