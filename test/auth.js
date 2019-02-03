@@ -20,7 +20,9 @@ describe("User", function() {
 
     it("should be able to signup", function(done) {
         User.findOneAndRemove({ username: "testone" }, function() {
-            agent.post("/sign-up").send({ username: "testone", password: "password" }).end(function(err, res) {
+            agent.post("/sign-up")
+            .send({ username: "testone", password: "password" })
+            .end(function(err, res) {
                 console.log(res.body);
                 res.should.have.status(200);
                 agent.should.have.cookie("nToken");
@@ -28,8 +30,7 @@ describe("User", function() {
             })
         })
     })
+    after(function () {
+      agent.close()
+    });
 })
-
-after(function () {
-  agent.close()
-});

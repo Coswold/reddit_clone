@@ -13,16 +13,14 @@ module.exports = function(app) {
         // SAVE INSTANCE OF Comment MODEL TO DB
         comment.save()
         .then(comment => {
-            // REDIRECT TO THE ROOT
-            return Post.findById(req.params.postId);
+            return Promise.all([Post.findById(req.params.postId)])
         })
-        .then(post => {
+        .then(([post, User]) => {
             post.comments.unshift(comment);
-            return post.save();
+            return Promise.all([post.save()])
         })
         .then(post => {
-            console.log(post._id)
-            res.redirect(`/posts/` + post._id);
+            res.redirect(`/posts/` + req.params.postId);
         })
         .catch(err => {
             console.log(err);
