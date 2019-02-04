@@ -29,8 +29,6 @@ module.exports = function(app) {
         if (req.user) {
             const post = new Post(req.body);
             post.author = req.user._id;
-            console.log(post)
-            console.log(post.author)
             // SAVE INSTANCE OF POST MODEL TO DB
             post.save().then(post => {
                 // REDIRECT TO THE ROOT

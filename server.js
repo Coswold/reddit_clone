@@ -33,14 +33,11 @@ app.use(checkAuth);
 // Add after body parser initialization!
 app.use(expressValidator());
 
-// Set db
 require('./data/reddit-db');
-
-const Post = require('./models/post')
-const posts = require('./controllers/posts')(app)
-
+require('./controllers/posts')(app)
 require('./controllers/comments.js')(app);
 require('./controllers/auth.js')(app);
+require('./controllers/replies.js')(app);
 
 var exphbs = require('express-handlebars')
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
