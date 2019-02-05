@@ -22,31 +22,35 @@ module.exports = function(app) {
 
     // CREATE REPLY
     app.post("/posts/:postId/comments/:commentId/replies", (req, res) => {
-        // TURN REPLY INTO A COMMENT OBJECT
-        console.log(req.body)
-        const reply = new Comment(req.body);
-        reply.author = req.user._id
-        // LOOKUP THE PARENT POST
-        Post.findById(req.params.postId)
-        .then(post => {
-            // FIND THE CHILD COMMENT
-            Promise.all([
-                reply.save(),
-                Comment.findById(req.params.commentId),
-            ])
-            .then(([reply, comment]) => {
-                // ADD THE REPLY
-                console.log(reply)
-                comment.comments.unshift(reply._id);
+        if (req.user) {
+            // TURN REPLY INTO A COMMENT OBJECT
+            console.log(req.body)
+            const reply = new Comment(req.body);
+            reply.author = req.user._id
+            // LOOKUP THE PARENT POST
+            Post.findById(req.params.postId)
+            .then(post => {
+                // FIND THE CHILD COMMENT
+                Promise.all([
+                    reply.save(),
+                    Comment.findById(req.params.commentId),
+                ])
+                .then(([reply, comment]) => {
+                    // ADD THE REPLY
+                    console.log(reply)
+                    comment.comments.unshift(reply._id);
 
-                return Promise.all([comment.save()]);
+                    return Promise.all([comment.save()]);
+                })
+                .then(() => {
+                    res.redirect(`/posts/${req.params.postId}`);
+                })
+                .catch(console.error);
+                // SAVE THE CHANGE TO THE PARENT DOCUMENT
+                return post.save();
             })
-            .then(() => {
-                res.redirect(`/posts/${req.params.postId}`);
-            })
-            .catch(console.error);
-            // SAVE THE CHANGE TO THE PARENT DOCUMENT
-            return post.save();
-        })
+        } else {
+            return res.status(401); // UNAUTHORIZED
+        }
     });
 };
