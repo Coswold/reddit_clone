@@ -8,12 +8,17 @@ const expressValidator = require('express-validator');
 
 var cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+var exphbs = require('express-handlebars')
+
 
 app.use(cookieParser());
 
 // Use Body Parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(express.static('public'))
+
 
 var checkAuth = (req, res, next) => {
     console.log("Checking authentication");
@@ -39,7 +44,6 @@ require('./controllers/comments.js')(app);
 require('./controllers/auth.js')(app);
 require('./controllers/replies.js')(app);
 
-var exphbs = require('express-handlebars')
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
